@@ -10,7 +10,18 @@ function App() {
   const [alert, setAlert] = useState({show:false, msg:'', type:'' });
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('test')
+    if(!name){
+      // display alert 1
+    }
+    else if(name && isEditing){
+      // editing
+    }
+    else{
+      // display alert 2
+      const newItem = {id: new Date().getTime().toString(), title:name};
+      setList([...list, newItem])
+      setName('')
+    }
   }
 
   return <section className="section-center">
@@ -21,7 +32,7 @@ function App() {
         <input 
           type='text'
           className='fruit'
-          placeholder='example: Pineapple'
+          placeholder='ex: Pineapple'
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -30,8 +41,9 @@ function App() {
         </button>
       </div>
     </form>
+    
     <div className="fruit-container">
-      <List />
+      <List items={list} />
       <button className="clear-btn">Clear Fruits</button>
     </div>
   </section>
