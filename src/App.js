@@ -3,7 +3,18 @@ import List from './List';
 import Alert from './Alert';
 
 function App() {
-  return <h2>Hello, World!</h2>
+  const[name, setName] = useState('');
+  const[list, setList] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editID, setEditID] = useState(null);
+  const [alert, setAlert] = useState({show:false, msg:'', type:'' });
+
+  return <section className="section-center">
+    <div className="fruit-container">
+      <List />
+      <button className="clear-btn">Clear Fruits</button>
+    </div>
+  </section>
 }
 
 export default App;
