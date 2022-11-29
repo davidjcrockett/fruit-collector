@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FaEdit, FaTrash, FaPlus, FaMinus } from 'react-icons/fa'
 
 const List = ({items, removeItem, editItem}) => {
-    const [ count, setCount ] = useState(0);
+    const [ count, setCount ] = useState(1);
     const incrementCounter = () => {
         return setCount(count +1);
     }
@@ -15,17 +15,38 @@ const List = ({items, removeItem, editItem}) => {
         const { id, title } = item;
         return (<article key={id} className='fruit-item'>
             <p className='title'>{title}</p>
-            <div className='btn-container'>
-                <button type='button' className='minus-btn' onClick={decrementCounter}> <FaMinus /> </button> 
+            <div className='btn-container' >
+
+                <button
+                type='button'
+                className='minus-btn'
+                onClick={() => decrementCounter(id)}>
+                <FaMinus />
+                </button>
+
                 {count}
-                <button type='button' className='add-btn' onClick={incrementCounter}> <FaPlus /> </button>
-                <button type='button' className='edit-btn' onClick={() => editItem(id)}>
-                    <FaEdit />
+
+                <button
+                type='button'
+                className='add-btn'
+                onClick={() => incrementCounter(id)}>
+                <FaPlus />
                 </button>
-                <button type='button' className='delete-btn' onClick={() => removeItem(id)}
-                >
-                    <FaTrash />
+
+                <button
+                type='button'
+                className='edit-btn'
+                onClick={() => editItem(id)}>
+                <FaEdit />
                 </button>
+
+                <button
+                type='button'
+                className='delete-btn'
+                onClick={() => removeItem(id)}>
+                <FaTrash />
+                </button>
+
             </div>
         </article>
         )
