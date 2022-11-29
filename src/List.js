@@ -1,12 +1,24 @@
-import React from 'react'
-import { FaEdit, FaTrash } from 'react-icons/fa'
+import React, { useState } from 'react'
+import { FaEdit, FaTrash, FaPlus, FaMinus } from 'react-icons/fa'
+
 const List = ({items, removeItem, editItem}) => {
+    const [ count, setCount ] = useState(0);
+    const incrementCounter = () => {
+        return setCount(count +1);
+    }
+    const decrementCounter = () => {
+        return setCount(count -1);
+    }
+
   return ( <div className='fruit-list'>
     {items.map((item) => {
         const { id, title } = item;
         return (<article key={id} className='fruit-item'>
             <p className='title'>{title}</p>
             <div className='btn-container'>
+                <button type='button' className='minus-btn' onClick={decrementCounter}> <FaMinus /> </button> 
+                {count}
+                <button type='button' className='add-btn' onClick={incrementCounter}> <FaPlus /> </button>
                 <button type='button' className='edit-btn' onClick={() => editItem(id)}>
                     <FaEdit />
                 </button>
