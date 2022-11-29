@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import List from './List';
 import Alert from './Alert';
 
@@ -18,7 +18,20 @@ function App() {
       showAlert(true,'danger','Please Enter a Fruit')
     }
     else if(name && isEditing){
-      // editing
+      setList(
+        list.map((item) => {
+     
+          if(item.id === editID) {
+          return { ...item, title: name }
+        }
+
+        return item
+      })
+      )
+      setName('');
+      setEditID(null);
+      setIsEditing(false);
+      showAlert(true, 'success', 'Successfully Swapped this Fruit!')
     }
     else{
       showAlert(true, 'success', 'Fruit Added to Basket!')
@@ -42,6 +55,13 @@ function App() {
     setList(list.filter((item) => item.id !== id))
   }
 
+  const editItem = (id) => {
+    const specificItem = list.find((item) => item.id === id);
+    setIsEditing(true);
+    setEditID(id);
+    setName(specificItem.title)
+  }
+
   return <section className="section-center">
     <form className="fruit-form" onSubmit={handleSubmit}>
       {alert.show && <Alert {...alert} removeAlert={showAlert} />}
@@ -61,7 +81,7 @@ function App() {
     </form>
     {list.length > 0 && (
     <div className="fruit-container">
-      <List items={list} removeItem={removeItem} />
+      <List items={list} removeItem={removeItem} editItem={editItem} />
       <button className="clear-btn" onClick={clearBasket}>
         Clear Fruits
         </button>
