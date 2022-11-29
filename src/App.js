@@ -15,14 +15,13 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if(!name){
-      // display alert 1
-      showAlert(true,'danger','please enter a fruit')
+      showAlert(true,'danger','Please Enter a Fruit')
     }
     else if(name && isEditing){
       // editing
     }
     else{
-      // display alert 2
+      showAlert(true, 'success', 'Fruit Added to Basket!')
       const newItem = {id: new Date().getTime().toString(), title:name};
       setList([...list, newItem])
       setName('')
@@ -31,6 +30,16 @@ function App() {
 
   const showAlert = (show=false, type="", msg="") => {
     setAlert({show, type, msg})
+  }
+
+  const clearBasket = () => {
+    showAlert(true, 'danger', 'Your Basket is Now Empty!')
+    setList([])
+  }
+
+  const removeItem = (id) => {
+    showAlert(true, 'danger', 'Fruit Removed From Basket!')
+    setList(list.filter((item) => item.id !== id))
   }
 
   return <section className="section-center">
@@ -52,8 +61,10 @@ function App() {
     </form>
     {list.length > 0 && (
     <div className="fruit-container">
-      <List items={list} />
-      <button className="clear-btn">Clear Fruits</button>
+      <List items={list} removeItem={removeItem} />
+      <button className="clear-btn" onClick={clearBasket}>
+        Clear Fruits
+        </button>
     </div>
     )}
   </section>
